@@ -1,0 +1,20 @@
+name: Deploy on push
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install
+      - run: npm run build
+      - name: deploy to xserver
+        uses: SamKirkland/FTP-Deploy-Action@4.2.0
+        with:
+            server: ${{ secrets.STG_SERVER_ADDRESS }}
+            username: ${{ secrets.STG_FTP_USERNAME }}
+            password: ${{ secrets.STG_FTP_PASSWORD }}
+            local-dir: ./dist/ 
+            server-dir: ${{ secrets.STG_DOCUMENT_ROOT }}
