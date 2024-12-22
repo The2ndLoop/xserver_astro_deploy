@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// [path].astroにしたときのやつ
+// export async function getStaticPaths() {
+//   const paths = await getAllHogePaths() // ここでMicroCMSで設定しておいた何かをpathとして取得する
+//   return paths.contents.map((v) => {
+//     return { params: { path: v.path } }
+//   })
+// }
+
+export async function getStaticPaths() {
+  return [
+      { params: { id: 1 } },
+      { params: { id: 2 } },
+      { params: { id: 3 } },
+  ]
+}
+
+const { id } = Astro.params
+
+---
+<Layout>
+    <h1 style="text-align: center; font-size: 82px;">{id}</h1>
+</Layout>
+
